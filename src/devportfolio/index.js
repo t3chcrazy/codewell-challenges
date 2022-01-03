@@ -17,7 +17,7 @@ export default function Portfolio() {
     return (
         <div className = "bg-black">
             <NavMenu />
-            <div className = "container md:px-0 px-2 mx-auto">
+            <div className = "container mx-auto">
                 <h1 className = "font-prata text-white md:text-6xl text-2xl leading-normal mt-10">Helping companies build<br />better,scalable software.</h1>
                 <div className = "text-stone-400 md:w-5/12 w-full leading-normal">Award-winning web developer and author, with over 15+ years of working experience with Fortune 500 companies like Apple, Google, Facebook and more.</div>
                 <div className = "flex flex-wrap lg:justify-between md:justify-around justify-center my-20">
@@ -46,7 +46,7 @@ export default function Portfolio() {
                 </div>
             </div>
             <div className = "bg-gray-300 py-12">
-                <div className = "container md:px-0 px-2 mx-auto flex md:flex-row flex-col md:justify-between items-center">
+                <div className = "container mx-auto flex md:flex-row flex-col md:justify-between items-center">
                     <div className = "md:w-[48%] w-full">
                         <h1 className = "font-prata text-white md:text-4xl text-2xl m-0 leading-snug mb-3">A Co-founder at one of the<br />world's largest communities</h1>
                         <div className = "text-stone-600 leading-snug">
@@ -62,13 +62,13 @@ export default function Portfolio() {
                     </div>
                 </div>
             </div>
-            <div className = "container mx-auto py-24 md:px-0 px-2">
+            <div className = "container mx-auto py-24">
                 <h1 className = "text-white font-prata text-3xl">Interested in working with me?</h1>
                 <div className = "text-stone-600 leading-normal md:w-1/2 w-full mt-3 mb-5">I'm active on all social media platforms listed below, but you can also send me an email and I will get back to you within 24-48 hours.</div>
                 <button className = "bg-yellow-400 px-3 py-2 text-gray-900">Get in touch</button>
             </div>
             <footer className = "bg-gray-600 py-5">
-                <div className = "container mx-auto flex flex-row justify-between md:px-0 px-2">
+                <div className = "container mx-auto flex flex-row justify-between">
                     <h3 className = "text-white text-xl font-prata">Johnathan Spectre</h3>
                     <div className = "flex flex-row items-center">
                         <img className = "ml-3" src = {Twitter} alt = "Twitter" />

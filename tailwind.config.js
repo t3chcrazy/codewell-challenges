@@ -15,7 +15,11 @@ module.exports = {
         xl: "10rem"
       }
     },
-    extend: {},
+    extend: {
+      colors: {
+        lightYellow: "#f9f6f1"
+      }
+    },
   },
   plugins: [],
 }

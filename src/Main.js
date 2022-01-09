@@ -6,6 +6,9 @@ export default function Main() {
             <Link to = "/dev-portfolio">
                 Dev portfolio challenge
             </Link>
+            <Link to = "/yelpcamp">
+                Yelpcamp
+            </Link>
         </div>
     )
 }

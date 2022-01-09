@@ -2,4 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .blackButton {
+        @apply bg-black text-white rounded-md px-3 py-4 transition-opacity hover:opacity-80;
+    }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');

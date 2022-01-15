@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Logo from '../Assets/Logo.svg'
 import Airbnb from '../Assets/Airbnb.svg'
 import Booking from '../Assets/Booking.svg'
@@ -19,9 +20,9 @@ export default function Landing() {
                         <li className = "mb-3"><img className = "inline mr-1" src = {Checkmark} alt = "Checkmark" />Leave reviews and experiences</li>
                         <li className = "mb-3"><img className = "inline mr-1" src = {Checkmark} alt = "Checkmark" />See locations for all camps</li>
                     </ul>
-                    <button className = "blackButton self-start mt-2">
+                    <Link className = "blackButton self-start mt-2" to = "/yelpcamp/campgrounds">
                         View Campgrounds
-                    </button>
+                    </Link>
                     <div className = "mt-4 mb-2">Partnered with:</div>
                     <div className = "flex flex-row">
                         <img src = {Airbnb} alt = "Airbnb logo" />

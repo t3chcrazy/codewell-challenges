@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react'
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
-import { getDatabase } from 'firebase/database'
+import { getDatabase, onValue, ref } from 'firebase/database'
 
 const firebaseConfig = {
 
@@ -23,5 +24,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const db = getDatabase(app)
+
+export function useFirebaseValues(path) {
+    const [data, setData] = useState()
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const unsubscribe = onValue(ref(db, path), snapshot => {
+            if (snapshot.exists()) {
+                setData(snapshot.val())
+            }
+            setLoading(false)
+        }, {
+            onlyOnce: true
+        })
+        return () => {
+            unsubscribe()
+        }
+    }, [path])
+
+    return { loading, data }
+}
 
 export { app, auth, db }

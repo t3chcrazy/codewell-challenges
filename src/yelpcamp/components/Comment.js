@@ -1,12 +1,13 @@
-export default function Comment() {
+export default function Comment({ comment }) {
+    const { comment: review, createdBy, submittedOn } = comment
     return (
         <div className = "py-6">
             <div className = "flex flex-row justify-between">
-                <h1 className = "font-bold font-lg text-black">Adam Jones</h1>
-                <div className = "text-gray-400 font-lg">13h ago</div>
+                <h1 className = "font-bold font-lg text-black">{createdBy}</h1>
+                <div className = "text-gray-400 font-lg">{submittedOn}</div>
             </div>
             <div className = "mt-3">
-                Honestly one of the best experiences ever, took us a while to figure out how to get there but it was amazing!
+                {review}
             </div>
         </div>
     )

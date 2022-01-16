@@ -1,59 +1,36 @@
-import { useContext, useMemo } from "react"
+import { useContext, useMemo, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { onValue, ref } from 'firebase/database'
 import TopHeader from "../components/TopHeader"
 import Search from '../Assets/Search Icon.svg'
-import Buloy from '../Assets/Camp Images/Compressed Images/Buloy Springs.jpg'
-import Latik from '../Assets/Camp Images/Compressed Images/Latik Riverside.jpg'
-import Mount from '../Assets/Camp Images/Compressed Images/Mount Ulap.jpg'
-import Onay from '../Assets/Camp Images/Compressed Images/Onay Beach.jpg'
-import Seven from '../Assets/Camp Images/Compressed Images/Seven Sisters Waterfall.jpg'
 import CampCard from "../components/CampCard"
 import Navbar, { Footer } from "../components/Navbar"
 import { AuthContext } from "../context"
-
-const LIST = [
-    {
-        name: "Mount Ulap",
-        image: Mount,
-        price: 399,
-        description: "One of the most famous hikes in Bengust in Mt. Ulap in Itogon."
-    },
-    {
-        name: "Calagus Islands",
-        image: Mount,
-        price: 399,
-        description: "One of the most famous hikes in Bengust in Mt. Ulap in Itogon."
-    },
-    {
-        name: "Onay Beach",
-        image: Onay,
-        price: 399,
-        description: "One of the most famous hikes in Bengust in Mt. Ulap in Itogon."
-    },
-    {
-        name: "Seven Sisters Waterfall",
-        image: Seven,
-        price: 399,
-        description: "One of the most famous hikes in Bengust in Mt. Ulap in Itogon."
-    },
-    {
-        name: "Latik Riverside",
-        image: Latik,
-        price: 399,
-        description: "One of the most famous hikes in Bengust in Mt. Ulap in Itogon."
-    },
-    {
-        name: "Buloy Springs",
-        image: Buloy,
-        price: 399,
-        description: "One of the most famous hikes in Bengust in Mt. Ulap in Itogon."
-    },
-]
+import { db } from '../firebase-services'
 
 export default function Campgrounds() {
-    // const isLoggedIn = !!auth.currentUser
+    const [camps, setCamps] = useState([])
     const { user } = useContext(AuthContext)
     const isLoggedIn = useMemo(() => !!user, [user])
+
+    useEffect(() => {
+        const fetchCamps = async () => {
+            try {
+                onValue(ref(db, "camps"), data => {
+                    if (data.exists()) {
+                        setCamps(Object.entries(data.val()))
+                    }
+                }, {
+                    onlyOnce: true
+                })
+            }
+            catch (err) {
+                console.log("Error fetching camps", err)
+            }
+        }
+        fetchCamps()
+    }, [])
+
     return (
         <div>
             <TopHeader />
@@ -74,7 +51,7 @@ export default function Campgrounds() {
                     </Link>
                 </div>
                 <div className = "grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
-                    {LIST.map(camp => <CampCard key = {camp.name} camp = {camp} />)}
+                    {camps.map(camp => <CampCard key = {camp[0]} camp = {camp[1]} id = {camp[0]} />)}
                 </div>
                 <Footer className = "lg:mt-10 mt-5" />
             </div>

@@ -17,10 +17,13 @@ export default function AuthScreen() {
         return slug[slug.length-1]
     }, [pathname])
     const isSignIn = useMemo(() => slug === "signin", [slug])
+    const [error, setError] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = async () => {
+    const handleSubmit = async e => {
+        e.preventDefault()
         try {
+            setError(prev => !!prev? "": prev)
             setLoading(prev => !prev? true: prev)
             if (slug === "signin") {
                 const result = await signInWithEmailAndPassword(auth, name, password)
@@ -36,7 +39,27 @@ export default function AuthScreen() {
             }
         }
         catch (err) {
-            console.log("Error", err)
+            let finalErrorMessage = ""
+            switch (err?.code) {
+                case "auth/user-not-found":
+                    finalErrorMessage = "User not found. Please signup"
+                    break
+                case "auth/email-already-in-use":
+                    finalErrorMessage = "Email already exists. Please login"
+                    break
+                case "auth/wrong-password":
+                    finalErrorMessage = "Wrong password. Please try again"
+                    break
+                case "auth/invalid-app-credential":
+                    finalErrorMessage = "API credentials don't seem valid anymore. Please contact abhishekprashant09@gmail.com"
+                    break
+                case "auth/too-many-requests":
+                    finalErrorMessage = "Too many requests. Please try again after sometime"
+                    break
+                default:
+                    finalErrorMessage = "Something went wrong. Please try again"
+            }
+            setError(finalErrorMessage)
         }
         finally {
             setLoading(false)
@@ -54,21 +77,22 @@ export default function AuthScreen() {
     return (
         <div className = "flex lg:flex-row flex-col lg:h-screen h-auto">
             <div className = "lg:pl-24 lg:pr-36 px-12 flex flex-col flex-1 py-8">
-                <div className = "flex flex-row justify-between items-center">
+                <div className = "flex flex-row justify-between items-center lg:mb-0 mb-3">
                     <img className = "w-fit" src = {Logo} alt = "Yelpcamp logo" />
                     <Link to = "/yelpcamp/campgrounds">
                         <button>Back to campgrounds</button>
                     </Link>
                 </div>
-                <div className = "flex-1 flex flex-col justify-center text-stone-700">
+                <form onSubmit = {handleSubmit} className = "flex-1 flex flex-col justify-center text-stone-700">
                     <h1 className = "text-black leading-tight lg:text-5xl md:text-3xl text-xl font-bold">Start exploring camps from all around the world.</h1>
-                    <Input type = "email" label = "User Name" value = {name} onChange = {handleName} placeholder = "john_doe@gmail.com" />
-                    <Input type = "password" label = "Password" value = {password} onChange = {handlePassword} placeholder = "Enter your password" />
-                    <button disabled = {loading} onClick = {handleSubmit} className = {`blackButton my-3 ${loading && "bg-gray-600"}`}>{loading? "Loading": isSignIn? "Login": "Create an account"}</button>
+                    <Input required pattern = "[^@\s]+@[^@\s]+\.[^@\s]+" type = "email" label = "User Name" value = {name} onChange = {handleName} placeholder = "john_doe@gmail.com" />
+                    <Input required type = "password" label = "Password" value = {password} onChange = {handlePassword} placeholder = "Enter your password" />
+                    <div className = {`text-red-500 text-md my-2 transition ${!!error? "translate-x-0 opacity-100": "translate-x-10 opacity-0"}`}>{error}</div>
+                    <button type = "submit" disabled = {loading} className = {`blackButton my-3 ${loading && "bg-gray-600"}`}>{loading? "Loading": isSignIn? "Login": "Create an account"}</button>
                     <div className = "text-stone-600 text-md font-medium">
                         {isSignIn? "Not a user yet?": "Already a user?"} <Link className = "text-sky-500 bg-transparent underline" to = {`${isSignIn? "/yelpcamp/signup": "/yelpcamp/signin"}`}>{isSignIn? "Create an account": "Sign In"}</Link>
                     </div>
-                </div>
+                </form>
             </div>
             <div className = "bg-lightYellow lg:flex-1 flex flex-col justify-center items-center lg:py-0 py-4 lg:px-0 px-6">
                 <div className = "lg:w-1/2 w-3/4">

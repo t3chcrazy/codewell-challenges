@@ -6,19 +6,16 @@ import Map from '../Assets/Map.png'
 import Comment from "../components/Comment"
 import ChatBubble from '../Assets/Chat Bubble.svg'
 import { useFirebaseValues } from '../firebase-services'
-import Loader from '../../Loader'
 import { AuthContext } from '../context'
+import CommentPlaceholder from '../placeholders/CommentPlaceholder'
+import CampPlaceholder from '../placeholders/CampPlaceholder'
 
 export default function CampPage() {
     const { campID } = useParams()
-    const { data: { name, image, price, description, submittedBy } = {}, loading } = useFirebaseValues(`/camps/${campID}`)
-    const { data: comments = {} } = useFirebaseValues(`/comments/${campID}`)
+    const { data: { name, image, price, description, submittedBy } = {}, loading: campLoading } = useFirebaseValues(`/camps/${campID}`)
+    const { data: comments = {}, loading: commentsLoading } = useFirebaseValues(`/comments/${campID}`)
     const { user } = useContext(AuthContext)
     const isLoggedIn = useMemo(() => !!user, [user])
-
-    if (loading) {
-        return <Loader />
-    }
 
     return (
         <div>
@@ -30,21 +27,31 @@ export default function CampPage() {
                 </div>
                 <div className = "lg:col-span-2 col-span-1">
                     <div className = "p-10 rounded-md border border-gray-300">
-                        <img className = "w-fit rounded-md" src = {image} alt = "Camp Splash" />
-                        <div className = "flex flex-row justify-between">
-                            <h1>{name}</h1>
-                            <h3>${price}/night</h3>
-                        </div>
-                        <section className = "text-stone-600 my-3 leading-snug">
-                            {description}
-                        </section>
-                        <div className = "italic">Submitted by {submittedBy}</div>
+                        {campLoading?
+                        <CampPlaceholder />:
+                        <>
+                            <img className = "w-fit rounded-md" src = {image} alt = "Camp Splash" />
+                            <div className = "flex flex-row justify-between">
+                                <h1>{name}</h1>
+                                <h3>${price}/night</h3>
+                            </div>
+                            <section className = "text-stone-600 my-3 leading-snug">
+                                {description}
+                            </section>
+                            <div className = "italic">Submitted by {submittedBy}</div>
+                        </>}
                     </div>
-                    <div className = "p-10 rounded-md border border-gray-300 mt-4">
+                    <div className = "p-10 rounded-md border border-gray-300 mt-4 flex flex-col">
                         <div className = "divide-y">
-                            {Object.values(comments).map(comment => <Comment key = {comment?.submittedOn} comment = {comment} />)}
+                            {commentsLoading?
+                            <>
+                                <CommentPlaceholder />
+                                <CommentPlaceholder />
+                                <CommentPlaceholder />
+                            </>:
+                            Object.values(comments).map(comment => <Comment key = {comment?.submittedOn} comment = {comment} />)}
                         </div>
-                        <Link to = {isLoggedIn? `/yelpcamp/addcomment/${campID}`: `/yelpcamp/signin`}>
+                        <Link className = "lg:self-end" to = {isLoggedIn? `/yelpcamp/addcomment/${campID}`: `/yelpcamp/signin`}>
                             <button className = "blackButton flex flex-row items-center">
                                 <img className = "mr-2" src = {ChatBubble} alt = "Chat Bubble" />
                                 Leave a review

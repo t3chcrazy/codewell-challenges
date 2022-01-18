@@ -15,10 +15,14 @@ const CampPage = lazy(() => import("./pages/CampPage"))
 
 export default function YelpCamp() {
     const [user, setUser] = useState()
+    const [processing, setProcessing] = useState(true)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
+            setProcessing(false)
             setUser(user)
+        }, err => {
+            setProcessing(false)
         })
         return () => {
             unsubscribe()
@@ -26,7 +30,7 @@ export default function YelpCamp() {
     }, [])
 
     return (
-        <AuthContext.Provider value = {{ user }}>
+        <AuthContext.Provider value = {{ user, processing }}>
             <Routes>
                 <Route index element = {<Suspense fallback = {<Loader />}><Landing /></Suspense>} />
                 <Route path = "/signin" element = {<Suspense fallback = {<Loader />}><Auth /></Suspense>} />

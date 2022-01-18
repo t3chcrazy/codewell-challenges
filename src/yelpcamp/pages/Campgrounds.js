@@ -1,35 +1,18 @@
-import { useContext, useMemo, useEffect, useState } from "react"
+import { useContext, useMemo } from "react"
 import { Link } from "react-router-dom"
-import { onValue, ref } from 'firebase/database'
 import TopHeader from "../components/TopHeader"
 import Search from '../Assets/Search Icon.svg'
 import CampCard from "../components/CampCard"
 import Navbar, { Footer } from "../components/Navbar"
 import { AuthContext } from "../context"
-import { db } from '../firebase-services'
+import { useFirebaseValues } from '../firebase-services'
+import CampCardPlaceholder from "../placeholders/CampCardPlaceholder"
 
 export default function Campgrounds() {
-    const [camps, setCamps] = useState([])
     const { user } = useContext(AuthContext)
     const isLoggedIn = useMemo(() => !!user, [user])
-
-    useEffect(() => {
-        const fetchCamps = async () => {
-            try {
-                onValue(ref(db, "camps"), data => {
-                    if (data.exists()) {
-                        setCamps(Object.entries(data.val()))
-                    }
-                }, {
-                    onlyOnce: true
-                })
-            }
-            catch (err) {
-                console.log("Error fetching camps", err)
-            }
-        }
-        fetchCamps()
-    }, [])
+    const { data, loading } = useFirebaseValues("camps")
+    const camps = useMemo(() => Object.entries(data ?? []), [data])
 
     return (
         <div>
@@ -47,11 +30,17 @@ export default function Campgrounds() {
                         <button className = "blackButton ml-2 px-8">Search</button>
                     </div>
                     <Link className = "underline text-stone-600 text-md mt-2" to = {isLoggedIn? "/yelpcamp/addcamp": "/yelpcamp/signin"}>
-                        Or add your own campgroud
+                        Or add your own campground
                     </Link>
                 </div>
                 <div className = "grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
-                    {camps.map(camp => <CampCard key = {camp[0]} camp = {camp[1]} id = {camp[0]} />)}
+                    {loading? 
+                    <>
+                        <CampCardPlaceholder />
+                        <CampCardPlaceholder />
+                        <CampCardPlaceholder />
+                    </>:
+                    camps.map(camp => <CampCard key = {camp[0]} camp = {camp[1]} id = {camp[0]} />)}
                 </div>
                 <Footer className = "lg:mt-10 mt-5" />
             </div>

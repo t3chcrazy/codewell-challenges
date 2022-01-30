@@ -11,7 +11,7 @@ import CampCardPlaceholder from "../placeholders/CampCardPlaceholder"
 export default function Campgrounds() {
     const { user } = useContext(AuthContext)
     const isLoggedIn = useMemo(() => !!user, [user])
-    const { data, loading } = useFirebaseValues("camps")
+    const { data, loading } = useFirebaseValues("camps", false)
     const camps = useMemo(() => Object.entries(data ?? []), [data])
 
     return (

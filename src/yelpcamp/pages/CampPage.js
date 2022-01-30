@@ -13,7 +13,7 @@ import CampPlaceholder from '../placeholders/CampPlaceholder'
 export default function CampPage() {
     const { campID } = useParams()
     const { data: { name, image, price, description, submittedBy } = {}, loading: campLoading } = useFirebaseValues(`/camps/${campID}`)
-    const { data: comments = {}, loading: commentsLoading } = useFirebaseValues(`/comments/${campID}`)
+    const { data: comments = {}, loading: commentsLoading } = useFirebaseValues(`/comments/${campID}`, false)
     const { user } = useContext(AuthContext)
     const isLoggedIn = useMemo(() => !!user, [user])
 

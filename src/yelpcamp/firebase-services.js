@@ -25,7 +25,7 @@ const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const db = getDatabase(app)
 
-export function useFirebaseValues(path) {
+export function useFirebaseValues(path, onlyOnce = true) {
     const [data, setData] = useState()
     const [loading, setLoading] = useState(true)
 
@@ -36,12 +36,12 @@ export function useFirebaseValues(path) {
             }
             setLoading(false)
         }, {
-            onlyOnce: true
+            onlyOnce
         })
         return () => {
             unsubscribe()
         }
-    }, [path])
+    }, [path, onlyOnce])
 
     return { loading, data }
 }

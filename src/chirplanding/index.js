@@ -1,6 +1,5 @@
 import TwitterWhite from './Assets/Twitter.svg'
 import HeroDesktop from './Assets/Hero Image (Desktop View).png'
-import HeroTablet from './Assets/Hero Image (Tablet View).png'
 import FeatureCard from './components/FeatureCard'
 import TestimonialCard from './components/TestimonialCard'
 import User1 from './Assets/userAvatar01.svg'

@@ -31,14 +31,14 @@ export default function Portfolio() {
                 <div className = "flex md:flex-row flex-col md:justify-between md:items-start items-center pt-12 pb-24">
                     <button className = "md:w-[48%] flex flex-col w-full group text-left md:mb-0 mb-10">
                         <img className = "w-full" src = {Spense} alt = "Spense" />
-                        <div className = "font-prata text-white md:text-3xl text-xl font-bold mt-3 my-3 after:content-['\2192'] after:ml-2">Spense.com</div>
+                        <div className = "font-prata text-white md:text-3xl text-xl font-bold mt-3 my-3 after:ml-2">Spense.com</div>
                         <div className = "text-stone-600 text-lg">
                             Rethinking the way writers get paid, an open source platform designed to help writers focus more on writing, and less on <span className = "italic">when</span> and <span className = "italic">how</span> they'll get paid. Project in collaboration with Codewell.cc
                         </div>
                     </button>
                     <button className = "md:w-[48%] flex flex-col w-full text-left">
                         <img className = "w-full" src = {Yelp} alt = "Yelp" />
-                        <div className = "font-prata text-white md:text-3xl text-xl font-bold mt-3 my-3 after:content-['\2192'] after:ml-2">YelpCamp</div>
+                        <div className = "font-prata text-white md:text-3xl text-xl font-bold mt-3 my-3 after:ml-2">YelpCamp</div>
                         <div className = "text-stone-600 text-lg">
                             Allowing backpack travelers to perfectly plan their trip through an open-source platform similar to TripAdvisor. With over 1m MAU, YelpCamp has been the crowd's favorite in 2021.
                         </div>

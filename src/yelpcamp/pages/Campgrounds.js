@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react"
+import { useContext, useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 import TopHeader from "../components/TopHeader"
 import Search from '../Assets/Search Icon.svg'
@@ -13,6 +13,12 @@ export default function Campgrounds() {
     const isLoggedIn = useMemo(() => !!user, [user])
     const { data, loading } = useFirebaseValues("camps", false)
     const camps = useMemo(() => Object.entries(data ?? []), [data])
+    const [finalCamps, setFinalCamps] = useState([])
+
+    const handleChange = e => {
+        const value = e.target.value
+        setFinalCamps(camps.filter(camp => !!value? new RegExp(value, "gi").test(camp[1].name): true))
+    }
 
     return (
         <div>
@@ -25,7 +31,7 @@ export default function Campgrounds() {
                     <div className = "flex flex-row">
                         <div className = "border-stone-700 bg-white rounded-sm flex flex-row items-center py-3 px-3">
                             <img src = {Search} alt = "Search Icon" />
-                            <input className = "outline-none ml-2" placeholder = "Search for camps" />
+                            <input onChange = {handleChange} className = "outline-none ml-2" placeholder = "Search for camps" />
                         </div>
                         <button className = "blackButton ml-2 px-8">Search</button>
                     </div>
@@ -40,7 +46,7 @@ export default function Campgrounds() {
                         <CampCardPlaceholder />
                         <CampCardPlaceholder />
                     </>:
-                    camps.map(camp => <CampCard key = {camp[0]} camp = {camp[1]} id = {camp[0]} />)}
+                    finalCamps.map(camp => <CampCard key = {camp[0]} camp = {camp[1]} id = {camp[0]} />)}
                 </div>
                 <Footer className = "lg:mt-10 mt-5" />
             </div>

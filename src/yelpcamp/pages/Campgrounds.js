@@ -12,12 +12,11 @@ export default function Campgrounds() {
     const { user } = useContext(AuthContext)
     const isLoggedIn = useMemo(() => !!user, [user])
     const { data, loading } = useFirebaseValues("camps", false)
-    const camps = useMemo(() => Object.entries(data ?? []), [data])
-    const [finalCamps, setFinalCamps] = useState([])
+    const [query, setQuery] = useState("")
+    const finalCamps = useMemo(() => Object.entries(data ?? {}).filter(camp => !!query? new RegExp(query, "gi").test(camp[1].name): true), [data, query])
 
     const handleChange = e => {
-        const value = e.target.value
-        setFinalCamps(camps.filter(camp => !!value? new RegExp(value, "gi").test(camp[1].name): true))
+        setQuery(e.target.value)
     }
 
     return (

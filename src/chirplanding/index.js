@@ -13,6 +13,7 @@ import User8 from './Assets/userAvatar08.svg'
 import User9 from './Assets/userAvatar09.svg'
 import TwitterBlack from './Assets/Twitter (Black).svg'
 import Checkmark from './Assets/Checkmark.svg'
+import HamburgerMenu from './Assets/Hamburger Menu.svg'
 
 const USERS = [
     {
@@ -49,22 +50,25 @@ export default function ChirpLanding() {
             <div className = "bg-yellow-50">
                 <nav className = "container mx-auto flex flex-row justify-between py-6">
                     <h2 className = "font-bold text-blue-600 italic text-3xl">Chirp</h2>
-                    <div className = "lg:flex flex-row justify-end items-center">
+                    <div className = "md:flex hidden flex-row justify-end items-center">
                         <a className = "mx-2" href = "/">Home</a>
                         <a className = "mx-2" href = "/">Pricing</a>
                         <a className = "mx-2" href = "/">FAQ</a>
-                        <button className = "flex flex-row items-center bg-sky-400 px-3 py-2 mr-2 rounded-md hover:opacity-80">
+                        <button className = "transition flex flex-row items-center bg-sky-600 px-3 py-2 mr-2 rounded-[4px] hover:opacity-80">
                             <img src = {TwitterWhite} alt = "Twitter Logo" />
                             <div className = "text-white text-md ml-2">Sign In With Twitter</div>
                         </button>
                     </div>
+                    <button className = "md:hidden block">
+                        <img src = {HamburgerMenu} alt = "Menu" />
+                    </button>
                 </nav>
-                <div className = "container mx-auto flex lg:flex-row flex-col-reverse max-h-screen py-10">
-                    <div className = "flex flex-col pt-5 lg:pr-6 pr-0">
+                <div className = "container mx-auto flex lg:flex-row flex-col-reverse py-10 min-h-screen">
+                    <div className = "flex-1 flex flex-col pt-5 lg:pr-6 pr-0">
                         <h1 className = "lg:text-6xl md:text-4xl text-2xl font-bold leading-tight">Twitter analytics<br />taken to a whole new level.</h1>
                         <div className = "text-stone-600 leading-relaxed my-2">Chirp is a suite of Twitter analytics that will help you better understand<br />your audience, which tweets they like, and most importantly, when they are the most active on Twitter.</div>
                         <div className = "flex flex-row items-center">
-                            <button className = "flex flex-row items-center bg-sky-400 p-3 mr-2 rounded-md hover:opacity-80">
+                            <button className = "transition flex flex-row items-center bg-sky-600 p-3 mr-2 rounded-[4px] hover:opacity-80">
                                 <img src = {TwitterWhite} alt = "Twitter Logo" />
                                 <div className = "text-white text-sm ml-2">Sign In With Twitter</div>
                             </button>
@@ -75,11 +79,13 @@ export default function ChirpLanding() {
                         </div>
                         <div className = "text-md text-stone-500">Join <span className = "text-cyan-600 font-bold">195</span> others who have analyzed their followers and scheduled <span className = "text-cyan-600 font-bold">1342</span> tweets!</div>
                     </div>
-                    <img className = "md:w-10/12 w-full aspect-auto" src = {HeroDesktop} alt = "Default hero banner" />
+                    <div className = "flex-1">
+                        <img className = "h-fit" src = {HeroDesktop} alt = "Default hero banner" />
+                    </div>
                 </div>
             </div>
             <div className = "container mx-auto py-10">
-                <h1 className = "text-2xl font-bold mt-4 mb-8">Features that help you Tweet smarter.</h1>
+                <h1 className = "text-2xl font-bold mt-4 mb-8">Features that help you<br />Tweet smarter.</h1>
                 <div className = "grid lg:grid-cols-2 grid-cols-1 gap-3">
                     <FeatureCard emoji = "📈" title = "Analytics">
                         We constantly monitor your audience as it grows -- so you can Tweet when your followers are most likely to be online and ready to engage with your content.
@@ -105,7 +111,7 @@ export default function ChirpLanding() {
             </div>
             <div className = "flex flex-col items-center py-10">
                 <h1 className = "text-2xl font-bold mt-4">One simple price plan.</h1>
-                <h3 className = "text-stone-300 mb-8 tex-center">Start growing your Twitter account by analyzing your follower's patterns.</h3>
+                <h3 className = "text-stone-300 mb-8 text-center">Start growing your Twitter account by analyzing your follower's patterns.</h3>
                 <div className = "bg-orange-50 border-orange-400 border-2 rounded-md px-5 py-4 flex flex-col mx-4">
                     <div>Monthly</div>
                     <h3 className = "text-lg text-stone-300"><span className = "text-4xl font-bold text-black">$9</span>/mo</h3>
@@ -131,7 +137,7 @@ export default function ChirpLanding() {
             </div>
             <footer className = "bg-teal-100">
                 <div className = "container mx-auto py-3 flex md:flex-row flex-col md:justify-between md:items-center">
-                    <h2 className = "font-bold text-blue-600 italic text-3xl">Chirp</h2>
+                    <h2 className = "font-bold text-blue-600 italic text-3xl">Chirp.</h2>
                     <div className = "flex flex-row items-center md:mt-0 mt-3">
                         <img src = {TwitterBlack} alt = "Twitter black logo" />
                         <button className = "mx-3">Privacy Policy</button>

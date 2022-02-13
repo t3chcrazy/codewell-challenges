@@ -40,6 +40,7 @@ export default function AuthScreen() {
         }
         catch (err) {
             let finalErrorMessage = ""
+            console.log(err?.code)
             switch (err?.code) {
                 case "auth/user-not-found":
                     finalErrorMessage = "User not found. Please signup"

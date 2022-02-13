@@ -1,6 +1,8 @@
 import Menu from './Assets/Hamburger Menu.svg'
 export default function NavMenu() {
 
+    const handleClick = () => window.location.replace("https://www.linkedin.com/in/abhishek-prashant-92b152a9/")
+
     return (
         <nav className = "container flex flex-row justify-between items-center mx-auto py-8">
             <h3 className = "text-white text-xl font-prata">Johnathan Spectre</h3>
@@ -10,7 +12,7 @@ export default function NavMenu() {
                 <li className = "cursor-pointer transition-opacity mx-2 hover:opacity-90">Awards</li>
                 <li className = "cursor-pointer transition-opacity mx-2 hover:opacity-90">About</li>
             </ul>
-            <button className = "bg-yellow-400 px-3 py-2 md:block hidden text-gray-900">Get in touch</button>
+            <button onClick = {handleClick} className = "bg-yellow-400 px-3 py-2 md:block hidden text-gray-900">Get in touch</button>
             <button className = "md:hidden block"><img src = {Menu} alt = "Hamburger Menu" /></button>
         </nav>
     )

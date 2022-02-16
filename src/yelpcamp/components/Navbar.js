@@ -43,7 +43,7 @@ export default function Navbar({ className }) {
                         <img src = {Menu} alt = "Hamburger Menu" />
                     </button>
                     {visible && 
-                    <ul className = "w-28 list-none lg:hidden block p-2 rounded-md border border-gray-500 absolute top-full left-1/2 -translate-x-2/3 shadow-md bg-white">
+                    <ul className = "list-none lg:hidden block p-2 rounded-md border border-gray-500 absolute top-[110%] left-1/2 -translate-x-[85%] shadow-md bg-white">
                         {isLoggedIn?
                         <>
                             <div className = "mb-2 bg-transparent text-stone-600">{name}</div>
